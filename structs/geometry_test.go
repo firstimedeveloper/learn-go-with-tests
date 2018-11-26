@@ -52,19 +52,23 @@ func TestArea(t *testing.T) {
 	tr := Triangle{2.5, 2.0}
 
 	areaTests := []struct {
+		name  string
 		shape Shape
 		want  float64
 	}{
-		{r, 5.0},
-		{c, 3.14},
-		{tr, 2.5},
+		{"Rectangle", r, 5.0},
+		{"Circle", c, 3.14},
+		{"Triangle", tr, 2.5},
 	}
 
 	for _, tt := range areaTests {
-		got := tt.shape.Area()
-		if got != tt.want {
-			t.Errorf("got %f want %f", got, tt.want)
-		}
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.shape.Area()
+			if got != tt.want {
+				t.Errorf("%#v got %f want %f", tt.shape, got, tt.want)
+			}
+		})
+
 	}
 }
 
@@ -73,17 +77,20 @@ func TestPerimeter(t *testing.T) {
 	c := Circle{1.0}
 
 	perimeterTests := []struct {
+		name  string
 		shape Shape
 		want  float64
 	}{
-		{r, 9.0},
-		{c, 6.28},
+		{"Rectangle", r, 9.0},
+		{"Circle", c, 6.28},
 	}
 
 	for _, tt := range perimeterTests {
-		got := tt.shape.Perimeter()
-		if got != tt.want {
-			t.Errorf("got %f want %f", got, tt.want)
-		}
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.shape.Perimeter()
+			if got != tt.want {
+				t.Errorf("%#v got %f want %f", tt.shape, got, tt.want)
+			}
+		})
 	}
 }
