@@ -5,17 +5,36 @@ import (
 )
 
 func TestAdd(t *testing.T) {
-	dictionary := Dictionary{}
-	dictionary.Add("test", "this is just a test")
+	t.Run("add new word", func(t *testing.T) {
+		dictionary := Dictionary{}
+		word := "test"
+		def := "this is just a test"
+		err := dictionary.Add(word, def)
 
-	want := "this is just a test"
-	got, err := dictionary.Search("test")
+		assertError(t, err, nil)
+		assertDefinition(t, dictionary, word, def)
+	})
+	t.Run("atempt to add an existing word", func(t *testing.T) {
+		word := "test"
+		def := "this is just a test"
+		dictionary := Dictionary{word: def}
+		err := dictionary.Add(word, "new test")
+
+		assertError(t, err, ErrWordExists)
+		assertDefinition(t, dictionary, word, def)
+
+	})
+}
+
+func assertDefinition(t *testing.T, dict Dictionary, word, def string) {
+	//t.Helper()
+
+	got, err := dict.Search(word)
 	if err != nil {
 		t.Fatal("should find added word:", err)
 	}
-
-	if want != got {
-		t.Errorf("got %s, want %s", got, want)
+	if def != got {
+		t.Errorf("got %s want %s", got, def)
 	}
 }
 
