@@ -16,7 +16,15 @@ func TestUpdate(t *testing.T) {
 		assertDefinition(t, dictionary, word, newDef)
 	})
 	//a use case of update where it should fail, as the word doesn't exist
+	t.Run("updating a word that does not exist (fails)", func(t *testing.T) {
+		word := "test"
+		dictionary := Dictionary{}
+		newDef := "new definition for the word"
 
+		err := dictionary.Update(word, newDef)
+		assertError(t, err, ErrWordNotExists)
+		//assertDefinition(t, dictionary, word, newDef)
+	})
 }
 
 func TestAdd(t *testing.T) {
