@@ -26,3 +26,8 @@ func (d Dictionary) Add(word, def string) error {
 
 	return nil
 }
+
+func (d Dictionary) Update(word, newDef string) error {
+	d[word] = newDef
+	return nil
+}
