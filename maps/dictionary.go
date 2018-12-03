@@ -10,6 +10,10 @@ var ErrNotFound = errors.New("could not find the word you were looking for")
 var ErrWordExists = errors.New("The word already exists")
 var ErrWordNotExists = errors.New("The word doesn't exist")
 
+func (d Dictionary) Delete(word string) {
+	delete(d, word)
+}
+
 func (d Dictionary) Search(word string) (string, error) {
 	definition, ok := d[word]
 	if !ok {
