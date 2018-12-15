@@ -6,8 +6,9 @@ import (
 )
 
 func main() {
-	handler := http.HandlerFunc(PlayerServer)
-	if err := http.ListenAndServe(":8080", handler); err != nil {
+	server := &PlayerServer{}
+
+	if err := http.ListenAndServe(":8080", server); err != nil {
 		log.Fatalf("could not listen on port 8080 %v", err)
 	}
 }
